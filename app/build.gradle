@@ -1,0 +1,50 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+def ext = rootProject.ext
+
+android {
+    namespace 'com.acr.mvvm'
+    compileSdk ext.android.compileSdk
+
+    defaultConfig {
+        applicationId "com.acr.mvvm"
+        minSdk ext.android.minSdk
+        targetSdk ext.android.targetSdk
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility ext.android.sourceCompatibility
+        targetCompatibility ext.android.targetCompatibility
+    }
+    kotlinOptions {
+        jvmTarget = ext.android.jvmTarget
+    }
+    dataBinding {
+        enable = true
+    }
+}
+
+dependencies {
+
+    implementation ext.dependencies.coreKtx
+    implementation ext.dependencies.appcompat
+    implementation ext.dependencies.material
+    implementation ext.dependencies.constraintlayout
+    testImplementation ext.dependencies.junit
+    androidTestImplementation ext.dependencies.androidJunit
+    androidTestImplementation ext.dependencies.espressoCore
+    implementation project(path: ':base')
+}
