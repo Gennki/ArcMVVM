@@ -8,9 +8,13 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.acr.base.BaseActivity
 import com.acr.base.BaseViewModel
 import com.acr.mvvm.databinding.ActivityMainBinding
+import com.acr.network.HttpHelper
+import com.acr.network.OkhttpProcessor
 import kotlinx.coroutines.*
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.flow.*
+import java.net.ResponseCache
+import kotlin.coroutines.CoroutineContext
 
 class MainActivity : BaseActivity<ActivityMainBinding, BaseViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,10 +47,27 @@ class MainActivity : BaseActivity<ActivityMainBinding, BaseViewModel>() {
 //            }
 //        }
 
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.RESUMED){
-                Log.d("FlowTest","repeatOnLifecycle")
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.RESUMED){
+//                Log.d("FlowTest","repeatOnLifecycle")
+//            }
+//        }
+
+        val httpProcessor = OkhttpProcessor()
+        HttpHelper.init(httpProcessor)
+
+        lifecycleScope.launch(CoroutineExceptionHandler { context: CoroutineContext, exception: Throwable ->
+
+        }) {
+            val job1 = async {
+                HttpHelper.Builder().url("https://www.baidu.com/").header("", "").params("", "").build().get<String>()
             }
+
+            val job2 = async {
+                HttpHelper.Builder().url("https://www.baidu.com/").header("", "").params("", "").build().get<String>()
+            }
+            job1.await()
+            job2.await()
         }
 
     }

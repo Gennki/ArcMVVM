@@ -1,22 +1,20 @@
 plugins {
-    id 'com.android.application'
+    id 'com.android.library'
     id 'org.jetbrains.kotlin.android'
 }
 
 def ext = rootProject.ext
 
 android {
-    namespace 'com.acr.mvvm'
+    namespace 'com.acr.network'
     compileSdk ext.android.compileSdk
 
     defaultConfig {
-        applicationId "com.acr.mvvm"
         minSdk ext.android.minSdk
         targetSdk ext.android.targetSdk
-        versionCode 1
-        versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -32,9 +30,6 @@ android {
     kotlinOptions {
         jvmTarget = ext.android.jvmTarget
     }
-    dataBinding {
-        enable = true
-    }
 }
 
 dependencies {
@@ -42,10 +37,11 @@ dependencies {
     implementation ext.dependencies.coreKtx
     implementation ext.dependencies.appcompat
     implementation ext.dependencies.material
-    implementation ext.dependencies.constraintlayout
-    implementation project(path: ':network')
     testImplementation ext.dependencies.junit
     androidTestImplementation ext.dependencies.androidJunit
     androidTestImplementation ext.dependencies.espressoCore
-    implementation project(path: ':base')
+    implementation ext.dependencies.okhttp
+    implementation ext.dependencies.okhttpLog
+    implementation ext.dependencies.gson
+
 }

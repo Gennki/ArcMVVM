@@ -1,29 +1,29 @@
 ext {
-    android = [
-            compileSdk :32,
-            minSdk:21,
-            targetSdk:32,
-            sourceCompatibility:JavaVersion.VERSION_1_8,
-            targetCompatibility:JavaVersion.VERSION_1_8,
-            jvmTarget:"1.8"
-    ]
-    versions = [
-            coreKtx:"1.7.0",
-            appcompat:"1.4.1",
-            material:"1.5.0",
-            constraintlayout:"2.1.3",
-            junit:"4.13.2",
-            androidJunit:"1.1.3",
-            espressoCore:"3.4.0"
-    ]
+    android = [compileSdk         : 33,
+               minSdk             : 21,
+               targetSdk          : 33,
+               sourceCompatibility: JavaVersion.VERSION_1_8,
+               targetCompatibility: JavaVersion.VERSION_1_8,
+               jvmTarget          : "1.8"]
 
-    dependencies = [
-            coreKtx: "androidx.core:core-ktx:${versions.coreKtx}",
-            appcompat:  "androidx.appcompat:appcompat:${versions.appcompat}",
-            material: "com.google.android.material:material:${versions.material}",
-            constraintlayout: "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}",
-            junit: "junit:junit:${versions.junit}",
-            androidJunit: "androidx.test.ext:junit:${versions.androidJunit}",
-            espressoCore: "androidx.test.espresso:espresso-core:${versions.espressoCore}"
-    ]
+    versions = [coreKtx         : '1.9.0',
+                appcompat       : '1.5.1',
+                material        : '1.7.0',
+                constraintlayout: '2.1.4',
+                junit           : "4.13.2",
+                androidJunit    : '1.1.4',
+                espressoCore    : '3.5.0',
+                okhttp          : "4.10.0",
+                gson            : "2.10"]
+
+    dependencies = [coreKtx         : "androidx.core:core-ktx:${versions.coreKtx}",
+                    appcompat       : "androidx.appcompat:appcompat:${versions.appcompat}",
+                    material        : "com.google.android.material:material:${versions.material}",
+                    constraintlayout: "androidx.constraintlayout:constraintlayout:${versions.constraintlayout}",
+                    junit           : "junit:junit:${versions.junit}",
+                    androidJunit    : "androidx.test.ext:junit:${versions.androidJunit}",
+                    espressoCore    : "androidx.test.espresso:espresso-core:${versions.espressoCore}",
+                    okhttp          : "com.squareup.okhttp3:okhttp:${versions.okhttp}",
+                    okhttpLog       : "com.squareup.okhttp3:logging-interceptor:${versions.okhttp}",
+                    gson            : "com.google.code.gson:gson:${versions.gson}"]
 }
