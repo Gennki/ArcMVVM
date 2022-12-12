@@ -16,10 +16,20 @@ import kotlinx.coroutines.flow.*
 import java.net.ResponseCache
 import kotlin.coroutines.CoroutineContext
 
-class MainActivity : BaseActivity<ActivityMainBinding, BaseViewModel>() {
+class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding.executePendingBindings()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                mViewModel.contentFlow.collect {
+                    mBinding.tvContent.text = it
+                }
+            }
+        }
+
+        mViewModel.getContent()
+
 //        lifecycleScope.launchWhenResumed {
 //            val flow1 = flowOf(1, 2)
 //            val flow2 = flowOf("One", "Two", "Three")
@@ -53,8 +63,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, BaseViewModel>() {
 //            }
 //        }
 
-        val httpProcessor = OkhttpProcessor()
-        HttpHelper.init(httpProcessor)
 
         lifecycleScope.launch(CoroutineExceptionHandler { context: CoroutineContext, exception: Throwable ->
 
