@@ -47,7 +47,8 @@ dependencies {
     androidTestImplementation ext.dependencies.androidJunit
     androidTestImplementation ext.dependencies.espressoCore
     implementation ext.dependencies.lifecycleViewmodelKtx
-    implementation ext.dependencies.gson
+    implementation ext.dependencies.okhttp
+    implementation ext.dependencies.okhttpLog
     implementation project(path: ':base')
     implementation project(path: ':network')
 }

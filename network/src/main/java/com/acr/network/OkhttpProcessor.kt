@@ -1,15 +1,11 @@
 package com.acr.network
 
-import okhttp3.FormBody
-import okhttp3.OkHttpClient
-import okhttp3.Request
+import okhttp3.*
+import java.io.IOException
 
-class OkhttpProcessor : HttpProcessor {
-    private var okHttpClient: OkHttpClient = OkHttpClient()
-
-    fun setOkhttpClient(okHttpClient: OkHttpClient) {
-        this.okHttpClient = okHttpClient
-    }
+class OkhttpProcessor(
+    private val okHttpClient: OkHttpClient = OkHttpClient()
+) : HttpProcessor {
 
     override suspend fun get(url: String, headers: Map<String, String?>?, params: Map<String, Any?>?): String {
         val builder = Request.Builder()
@@ -35,12 +31,11 @@ class OkhttpProcessor : HttpProcessor {
         val request = builder.build()
         val call = okHttpClient.newCall(request)
         val response = call.execute()
-        val result = if (response.isSuccessful) {
-            response.body?.string() ?: ""
+        if (response.isSuccessful) {
+            return response.body?.string() ?: ""
         } else {
-            response.message
+            throw IOException(response.toString())
         }
-        return result
     }
 
     override suspend fun post(url: String, headers: Map<String, String?>?, params: Map<String, Any?>?): String {
@@ -64,12 +59,11 @@ class OkhttpProcessor : HttpProcessor {
         val request = builder.build()
         val call = okHttpClient.newCall(request)
         val response = call.execute()
-        val result = if (response.isSuccessful) {
-            response.body?.string() ?: ""
+        if (response.isSuccessful) {
+            return response.body?.string() ?: ""
         } else {
-            response.message
+            throw IOException(response.toString())
         }
-        return result
     }
 
 

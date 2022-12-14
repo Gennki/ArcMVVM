@@ -41,7 +41,6 @@ dependencies {
     androidTestImplementation ext.dependencies.androidJunit
     androidTestImplementation ext.dependencies.espressoCore
     implementation ext.dependencies.okhttp
-    implementation ext.dependencies.okhttpLog
     implementation ext.dependencies.gson
 
 }

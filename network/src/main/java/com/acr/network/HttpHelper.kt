@@ -1,46 +1,41 @@
 package com.acr.network
 
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import java.lang.reflect.Type
 
 class HttpHelper private constructor() {
     companion object {
-        @JvmStatic
         private lateinit var httpProcessor: HttpProcessor
+        private lateinit var gson: Gson
 
         fun init(httpProcessor: HttpProcessor) {
             HttpHelper.httpProcessor = httpProcessor
+            gson = Gson()
         }
     }
 
     private var headers: HashMap<String, String?>? = null
     private var params: HashMap<String, Any?>? = null
     private var url: String = ""
-    lateinit var gson: Gson
 
 
     private constructor(url: String, headers: HashMap<String, String?>?, params: HashMap<String, Any?>?) : this() {
         this.url = url
         this.headers = headers
         this.params = params
-        gson = Gson()
     }
 
     suspend inline fun <reified T> get(): T {
         val result = doGet()
-        return if (T::class.java == String::class.java) {
-            result as T
-        } else {
-            gson.fromJson(result, T::class.java)
-        }
+        val type: Type = object : TypeToken<T>() {}.type
+        return Gson().fromJson(result, type)
     }
 
     suspend inline fun <reified T> post(): T {
         val result = doPost()
-        return if (T::class.java == String::class.java) {
-            result as T
-        } else {
-            gson.fromJson(result, T::class.java)
-        }
+        val type: Type = object : TypeToken<T>() {}.type
+        return Gson().fromJson(result, type)
     }
 
     suspend fun doGet(): String {
